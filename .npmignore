@@ -1,0 +1,60 @@
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build outputs (keep dist/ for npm package)
+# dist/ - commented out because we want to include built files in npm package
+
+# Development files
+*.log
+.DS_Store
+.vscode/
+.idea/
+
+# Testing
+coverage/
+.nyc_output
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Source maps (optional - uncomment if you don't want to include them)
+# *.map
+
+# Webpack config files (not needed for consumers)
+webpack.config.js
+
+# Documentation source files
+docs/
+
+# Example directories (optional - keep if you want examples in package)
+# examples/
+
+# Git files
+.gitignore
+.git/
+
+# CI/CD files
+.github/
+.gitlab-ci.yml
+.travis.yml
+.circleci/
+
+# Development scripts
+run.bat
+run.sh
+
+# Temporary files
+tmp/
+temp/
+
+# OS generated files
+Thumbs.db
+ehthumbs.db
+Desktop.ini

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3PAY SDK</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            color: #667eea;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 32px;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #5a6fd8;
+        }
+
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>3PAY SDK</h1>
+
+        <div style="margin-top: 20px; text-align: center;">
+            <button type="button" id="openCheckoutPageBtn" style="background: #28a745; margin-right: 10px;">
+                Open Checkout Page
+            </button>
+        </div>
+
+        <div id="result" class="result"></div>
+    </div>
+
+    <!-- Load the 3PAY SDK -->
+    <script src="https://unpkg.com/3pa-y@1.0.1/dist/3pa-y.min.js"></script>
+    <script>
+        // Wait for the SDK to load before initializing
+        function initializeSDK() {
+            console.log('Checking for ThreePay...', typeof ThreePay);
+
+            if (typeof ThreePay === 'undefined') {
+                console.log('ThreePay not loaded yet, retrying...');
+                setTimeout(initializeSDK, 100);
+                return;
+            }
+
+            console.log('ThreePay loaded successfully!');
+
+            // Initialize 3PAY SDK
+            const threePay = new ThreePay({
+                apiKey: '617ffe6b1784f902ce290e3653051562',
+                apiSecret: '4e6b816cfe2d706187019a9349f233ff1fca89341e8d931ff37f18c8af474f04',
+                baseUrl: 'http://localhost:5000'
+            });
+
+            const openCheckoutPageBtn = document.getElementById('openCheckoutPageBtn');
+
+            // Add event listeners for the new buttons
+            openCheckoutPageBtn.addEventListener('click', () => {
+                try {
+                    threePay.openCheckoutPage({
+                        width: 800,
+                        height: 600,
+                        defaultValues: {
+                            amount: 100.00,
+                            currencyType: 'USDT-TRC20',
+                            callbackUrl: 'https://your-site.com/webhook',
+                        },
+                        openInSameTab: true,
+                        openInNewTab: false
+                    });
+                } catch (error) {
+                    console.error('Error opening checkout page:', error);
+                    alert('Error opening checkout page: ' + error.message);
+                }
+            });
+        }
+
+        // Start trying to initialize once the page loads
+        document.addEventListener('DOMContentLoaded', initializeSDK);
+        // Also try immediately in case DOMContentLoaded already fired
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initializeSDK);
+        } else {
+            initializeSDK();
+        }
+    </script>
+</body>
+
+</html>

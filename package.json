@@ -1,6 +1,6 @@
 {
   "name": "3pa-y",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "Official 3PA-Y SDK for accepting cryptocurrency payments (USDT, USDC) via stablecoin payment gateway",
   "main": "dist/index.js",
   "browser": "dist/3pa-y.min.js",
@@ -12,8 +12,8 @@
     "LICENSE"
   ],
   "scripts": {
-    "build": "webpack --mode production",
-    "dev": "webpack --mode development --watch",
+    "build": "node init && webpack --mode production",
+    "dev": "node init && webpack --mode development --watch",
     "prepublishOnly": "npm run build"
   },
   "keywords": [
